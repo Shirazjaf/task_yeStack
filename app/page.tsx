@@ -1,3 +1,4 @@
+import ProductList from "./components/ProductList";
 import SearchBox from "./components/SearchBox";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <div className="max-w-2xl mx-auto mb-8">
         <SearchBox />
       </div>
+      <ProductList />
     </div>
   );
 }
