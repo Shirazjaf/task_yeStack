@@ -1,60 +1,57 @@
 import React from "react";
+
 import ProductCard from "./ProductCard";
+import { ProductType } from "@/types/Product";
+import { useInfinityGetProducts } from "@/services/ProductService";
 
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  image: string;
-  features?: string[];
-}
+function ProductList({
+  handleProductClick,
+}: {
+  handleProductClick: (product: ProductType) => void;
+}) {
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfinityGetProducts();
 
-export const mockProducts: Product[] = [
-  {
-    id: 1,
-    name: "Minimalist Desk Lamp",
-    description:
-      "A sleek, adjustable desk lamp with touch controls and multiple brightness levels. Perfect for your workspace or bedside table.",
-    price: 49.99,
-    category: "Lighting",
-    image: "/placeholder.svg?height=400&width=400",
-    features: [
-      "Touch-sensitive controls",
-      "3 brightness levels",
-      "Adjustable arm",
-      "Energy-efficient LED",
-    ],
-  },
-  {
-    id: 2,
-    name: "Ergonomic Office Chair",
-    description:
-      "Designed for comfort during long work sessions with adjustable height, lumbar support, and breathable mesh back.",
-    price: 199.99,
-    category: "Furniture",
-    image: "/placeholder.svg?height=400&width=400",
-    features: [
-      "Adjustable height",
-      "Lumbar support",
-      "360° swivel",
-      "Breathable mesh",
-    ],
-  },
-];
+  if (error) return <div>Failed to load</div>;
 
-function ProductList() {
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-full w-full">
+        Loading...
+      </div>
+    );
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {mockProducts.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          //   onClick={() => onProductClick(product)}
-          //   isSelected={product.id === selectedProductId}
-        />
-      ))}
+    <div className="">
+      <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {data &&
+          data.pages
+            .flatMap((page) => page.products)
+            .map((product: ProductType) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onClick={() => handleProductClick(product)}
+              />
+            ))}
+      </div>
+      <button
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+        className="text-xl font-semibold text-center w-full my-4 cursor-pointer"
+      >
+        {isFetchingNextPage
+          ? "Loading more..."
+          : hasNextPage
+          ? "Load More"
+          : "Nothing more to load"}
+      </button>
     </div>
   );
 }
