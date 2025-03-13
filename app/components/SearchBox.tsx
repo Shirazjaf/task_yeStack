@@ -36,6 +36,8 @@ function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
     }
   }, [searchQuery, data]);
 
+  console.log(data)
+
   return (
     <div className="">
       <input
