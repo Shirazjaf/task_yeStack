@@ -12,16 +12,14 @@ function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfinityGetProducts();
   const [suggestions, setSuggestions] = useState<ProductType[] | undefined>([]);
-  const [activeIndex, setActiveIndex] = useState(-1);
 
-  const handleSearchChange = useCallback((e: any) => {
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   }, []);
 
   const handleSuggestionClick = (suggestion: string) => {
     setSearchQuery(suggestion);
     setSuggestions([]);
-    setActiveIndex(-1);
   };
 
   useEffect(() => {
