@@ -5,7 +5,6 @@ import { Card, CardContent } from "./ui/card";
 import { ProductType } from "@/types/Product";
 import placeholder from '.././../public/placeholder.svg';
 function ProductDetail({product}:{product: ProductType}) {
-  console.log(product)
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">

@@ -7,7 +7,7 @@ const fetchProjects = async ({
   pageParam = 1,
 }): Promise<ProductResponseType> => {
   const res = await fetch(
-    `http://fakestoreapi.in/api/products?limit=15&page=${pageParam}`
+    `https://fakestoreapi.in/api/products?limit=15&page=${pageParam}`
   );
   return res.json();
 };
