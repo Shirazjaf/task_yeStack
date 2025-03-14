@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useInfinityGetProducts } from "@/services/ProductService";
 import { ProductType } from "@/types/Product";
+import { useInView } from "react-intersection-observer";
 
 type Props = {
   setSearchQuery: (query: string) => void;
@@ -9,13 +10,17 @@ type Props = {
 };
 
 function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
+  const { ref, inView } = useInView();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfinityGetProducts();
   const [suggestions, setSuggestions] = useState<ProductType[] | undefined>([]);
 
-  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  }, []);
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    },
+    []
+  );
 
   const handleSuggestionClick = (suggestion: string) => {
     setSearchQuery(suggestion);
@@ -36,7 +41,11 @@ function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
     }
   }, [searchQuery, data]);
 
-  console.log(data)
+  React.useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
 
   return (
     <div className="">
@@ -64,6 +73,7 @@ function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
             </div>
           ))}
           <button
+            ref={ref}
             onClick={() => fetchNextPage()}
             disabled={!hasNextPage || isFetchingNextPage}
             className="my-2 cursor-pointer"

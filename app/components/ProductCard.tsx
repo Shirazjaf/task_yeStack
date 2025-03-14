@@ -18,12 +18,14 @@ function ProductCard({ product, onClick, isSelected }: ProductCardProps) {
         isSelected ? "ring-2 ring-primary" : ""
       }`}
       onClick={onClick}>
-      <div className="relative h-48 w-full bg-muted">
+      <div className="relative h-48 w-full">
         <Image
           src={product.image || "/placeholder.svg"}
           alt={product.title}
-          fill
-          className="object-cover"
+          className=" w-30 h-[50%]"
+          layout="fill"
+          objectFit="contain"
+          
         />
       </div>
       <CardContent className="p-4">
