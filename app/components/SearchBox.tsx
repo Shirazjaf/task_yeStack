@@ -16,9 +16,7 @@ function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
 
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  interface HandleKeyDownEvent extends React.KeyboardEvent<HTMLInputElement> {}
-
-  const handleKeyDown = (e: HandleKeyDownEvent): void => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {
       setFocusedIndex((prevIndex) => {
         if (prevIndex === suggestions!.length - 1) return prevIndex;
