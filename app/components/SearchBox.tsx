@@ -15,6 +15,7 @@ function SearchBox({ setSearchQuery, searchQuery, handleProductClick }: Props) {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  console.log(focusedIndex);
 
   const handleKeyDown = (e: any) => {
     if (e.key === "ArrowDown") {
