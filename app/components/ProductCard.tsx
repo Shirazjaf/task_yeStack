@@ -4,6 +4,9 @@ import Image from "next/image";
 import { Card, CardContent } from "../components/ui/card";
 import { ProductType } from "@/types/Product";
 
+import placeholder from '.././../public/placeholder.svg';
+
+
 interface ProductCardProps {
   product: ProductType;
   onClick?: () => void;
@@ -20,11 +23,11 @@ function ProductCard({ product, onClick, isSelected }: ProductCardProps) {
       onClick={onClick}>
       <div className="relative h-48 w-full">
         <Image
-          src={product.image || "/placeholder.svg"}
+          src={product.image || placeholder}
           alt={product.title}
-          className=" w-30 h-[50%]"
-          layout="fill"
-          objectFit="contain"
+          className=" w-30 h-[50%] object-contain"
+          sizes="100%"
+          fill
           
         />
       </div>

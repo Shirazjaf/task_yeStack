@@ -1,5 +1,5 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 
 import { Card, CardContent } from "./ui/card";
 import { ProductType } from "@/types/Product";
@@ -9,12 +9,12 @@ function ProductDetail({product}:{product: ProductType}) {
     <Card className="overflow-hidden">
       <CardContent className="p-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative h-[300px] md:h-[400px] bg-muted">
+          <div className="relative h-[300px] md:h-[400px] ">
             <Image
               src={product?.image ?? placeholder}
               alt={product.title ?? "Product Image"}
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
           <div className="p-6">
